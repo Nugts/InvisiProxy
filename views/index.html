@@ -1,6 +1,31 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+  (function() {
+    const correctPassword = "738738";
+    if (sessionStorage.getItem("proxy_auth") !== "true") {
+      let attempts = 0;
+      let authenticated = false;
+      while (attempts < 3) {
+        let input = prompt("This is a private proxy server. Please enter the password to gain access:");
+        if (input === correctPassword) {
+          sessionStorage.setItem("proxy_auth", "true");
+          authenticated = true;
+          break;
+        } else {
+          attempts++;
+          alert("Incorrect password. " + (3 - attempts) + " attempts remaining.");
+        }
+      }
+      if (!authenticated) {
+        document.write("<h1>Access Denied</h1><p>Unauthorized usage is restricted.</p>");
+        window.stop(); 
+        window.location.href = "about:blank";
+      }
+    }
+  })();
+</script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="version" content="{{version}}" />
     {{ifSEO}}{{
